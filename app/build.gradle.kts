@@ -80,6 +80,7 @@ dependencies {
     implementation (libs.logging.interceptor)
     implementation (libs.okhttp.urlconnection)
     implementation(libs.androidx.activity)
+    implementation (libs.hdodenhof.circleimageview)
     //test's
     testImplementation(libs.junit)
     testImplementation(libs.junit)

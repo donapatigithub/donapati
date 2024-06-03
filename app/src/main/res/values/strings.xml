@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">donapati</string>
+    <string name="app_name">EazyKart</string>
+    <string name="welcome">Hello</string>
 </resources>
