@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.SignUpActivity">
+
+        <!-- Back button included layout -->
+        <ImageView
+            android:id="@+id/back_button_include"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/back_button"
+            android:scaleType="fitStart"/>
+
+        <!-- CardView wrapping the sign-up form -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/back_button_include"
+            android:layout_margin="14dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/signUpTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Create an account"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+                <!-- Subtitle -->
+                <TextView
+                    android:id="@+id/signUpSubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/signUpTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/subTitle"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <!-- Username EditText -->
+                <EditText
+                    android:id="@+id/username_edit_text"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/signUpSubtitle"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Enter Your Username" />
+
+                <!-- Email EditText -->
+                <EditText
+                    android:id="@+id/email_edit_text"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/username_edit_text"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Enter Your Email" />
+
+                <!-- Phone Number EditText -->
+                <EditText
+                    android:id="@+id/phone_edit_text"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email_edit_text"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Enter Your Phone Number" />
+
+                <!-- Password EditText -->
+                <EditText
+                    android:id="@+id/password_edit_text"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_edit_text"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:hint="Enter Your Password"
+                    android:inputType="textPassword" />
+
+                <!-- Sign Up Button -->
+                <Button
+                    android:id="@+id/sign_up_button"
+                    style="@style/RoundedButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/password_edit_text"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="Sign Up"
+                    android:textColor="@android:color/white" />
+
+                <!-- Or With Separator with Divider Lines -->
+                <RelativeLayout
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/sign_up_button"
+                    android:layout_marginVertical="16dp"
+                    android:gravity="center_horizontal"
+                    android:paddingHorizontal="16dp">
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toStartOf="@+id/or_with_text"
+                        android:background="@color/gray" />
+
+                    <TextView
+                        android:id="@+id/or_with_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginHorizontal="8dp"
+                        android:gravity="center"
+                        android:text="Or With"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_toEndOf="@+id/or_with_text"
+                        android:background="@color/gray" />
+                </RelativeLayout>
+
+                <!-- Facebook Button -->
+                <include
+                    android:id="@+id/facebook_button"
+                    layout="@layout/custom_fb"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/google_button" />
+
+                <!-- Google Button -->
+                <include
+                    android:id="@+id/google_button"
+                    layout="@layout/custom_google"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider" />
+
+                <!-- Already have an account? Login -->
+                <TextView
+                    android:id="@+id/login_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/facebook_button"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="Already have an account? " />
+
+                <TextView
+                    android:id="@+id/login_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/facebook_button"
+                    android:layout_toEndOf="@id/login_text"
+                    android:gravity="center"
+                    android:text="Login"
+                    android:textColor="@color/btn_color"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</layout>
