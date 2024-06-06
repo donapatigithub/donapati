@@ -12,7 +12,7 @@
             android:id="@+id/logo"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:layout_marginTop="500dp"
+            android:layout_marginTop="438dp"
             android:src="@drawable/cart_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,18 +53,19 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/signin"
+                        android:id="@+id/signinBtn"
                         style="@style/RoundedButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sign In" />
+                        android:layout_marginBottom="14dp"
+                        android:text="@string/sign_in" />
 
                     <Button
                         android:id="@+id/signupBtn"
                         style="@style/RoundedButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Sign Up" />
+                        android:text="@string/sign_up" />
                 </LinearLayout>
             </LinearLayout>
         </FrameLayout>
