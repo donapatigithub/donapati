@@ -14,8 +14,17 @@ class PreLoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = PreLoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.signupBtn.setOnClickListener {
-            startActivity(Intent(this, SignUpActivity::class.java))
+        onClick()
+    }
+
+    fun onClick() {
+        binding.apply {
+            signupBtn.setOnClickListener {
+                startActivity(Intent(this@PreLoginActivity, SignUpActivity::class.java))
+            }
+            signinBtn.setOnClickListener {
+                startActivity(Intent(this@PreLoginActivity, SignInActivity::class.java))
+            }
         }
     }
 }

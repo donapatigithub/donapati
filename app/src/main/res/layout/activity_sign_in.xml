@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="14dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/welcome_back_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/welcomeBack"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="32sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/username_edit_text"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/welcome_back_text_view"
+                    android:layout_marginTop="28dp"
+                    android:hint="@string/username"
+                    android:inputType="text"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/password_edit_text"
+                    style="@style/EditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/username_edit_text"
+                    android:layout_marginTop="28dp"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:id="@+id/login_button"
+                    style="@style/RoundedButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/password_edit_text"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/login" />
+
+                <TextView
+                    android:id="@+id/forgot_password_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/login_button"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="120dp"
+                    android:text="@string/forgot_password"
+                    android:textColor="@color/skyBlue"
+                    android:textSize="16sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/forgot_password_text_view"
+                    android:layout_marginTop="100dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/donot_have_acc_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:text="@string/don_t_have_an_account"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/sign_up_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="24dp"
+                        android:layout_toEndOf="@id/donot_have_acc_view"
+                        android:text="@string/sign_up"
+                        android:textColor="@color/skyBlue"
+                        android:textSize="18sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

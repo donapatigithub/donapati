@@ -3,7 +3,8 @@
     <style name="RoundedButtonStyle">
         <item name="android:background">@drawable/rounded_button</item>
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
     </style>
 
     <style name="EditTextStyle">
