@@ -12,10 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.donapati.databinding.ActivitySignUpBinding
+import com.example.donapati.db.DatabaseHelper
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
+    private lateinit var dbHelper: DatabaseHelper
     private val GET_ACCOUNTS_PERMISSION_REQUEST = 1
     private val TAG = "SignUpActivity"
 
@@ -23,6 +25,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        dbHelper = DatabaseHelper(this)
         onClick()
     }
 
@@ -31,9 +34,33 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
 
             signUpButton.setOnClickListener {
-                Toast.makeText(this@SignUpActivity, "Sign up successful", Toast.LENGTH_SHORT).show()
-                Thread.sleep(1000)
-                startActivity(intent)
+                val username = usernameEditText.text.toString()
+                val email = emailEditText.text.toString()
+                val phone = phoneEditText.text.toString()
+                val password = passwordEditText.text.toString()
+                val confirmPassword = cnfPasswordEditText.text.toString()
+
+                if (password == confirmPassword) {
+                    val success = dbHelper.addUser(username, email, phone, password)
+                    if (success) {
+                        Toast.makeText(
+                            this@SignUpActivity,
+                            "Sign up successful",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Thread.sleep(1000)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@SignUpActivity, "Sign up failed", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Passwords do not match",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
             loginLink.setOnClickListener {
                 startActivity(intent)
@@ -48,7 +75,6 @@ class SignUpActivity : AppCompatActivity() {
                 openApp("com.facebook.katana")
             }
 
-            // Request GET_ACCOUNTS permission
             if (ContextCompat.checkSelfPermission(
                     this@SignUpActivity,
                     Manifest.permission.GET_ACCOUNTS
