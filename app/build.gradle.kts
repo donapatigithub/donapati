@@ -82,6 +82,7 @@ dependencies {
     implementation (libs.okhttp.urlconnection)
     implementation(libs.androidx.activity)
     implementation (libs.hdodenhof.circleimageview)
+    implementation(libs.firebase.auth.ktx)
     //test's
     testImplementation(libs.junit)
     testImplementation(libs.junit)

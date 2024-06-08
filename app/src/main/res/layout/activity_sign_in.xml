@@ -63,24 +63,46 @@
                     android:textSize="32sp"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/username_required_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/welcome_back_text_view"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/username_req"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
                 <EditText
                     android:id="@+id/username_edit_text"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/welcome_back_text_view"
-                    android:layout_marginTop="28dp"
+                    android:layout_below="@id/username_required_text"
+                    android:layout_marginTop="4dp"
                     android:hint="@string/username"
                     android:inputType="text"
                     android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/password_required_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/username_edit_text"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/password_req"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/password_edit_text"
                     style="@style/EditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/username_edit_text"
-                    android:layout_marginTop="28dp"
+                    android:layout_below="@id/password_required_text"
+                    android:layout_marginTop="4dp"
                     android:hint="@string/password"
                     android:inputType="textPassword"
                     android:textAlignment="center" />
@@ -93,6 +115,18 @@
                     android:layout_below="@id/password_edit_text"
                     android:layout_marginTop="28dp"
                     android:text="@string/login" />
+
+                <TextView
+                    android:id="@+id/error_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/holo_red_light"
+                    android:layout_margin="12dp"
+                    android:visibility="gone"
+                    android:text="@string/please_fill_in_the_required_fields"
+                    android:layout_below="@id/loginButton"
+                    android:layout_marginTop="16dp"
+                    android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:id="@+id/forgot_password_text_view"

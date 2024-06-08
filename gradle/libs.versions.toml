@@ -31,6 +31,7 @@ roomRuntime = "2.6.1"
 rules = "1.5.0"
 runner = "1.0.2"
 activity = "1.9.0"
+firebaseAuthKtx = "23.0.0"
 
 [libraries]
 androidx-activity-compose-v180 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
@@ -80,6 +81,7 @@ ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

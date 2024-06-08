@@ -107,12 +107,24 @@
                     android:hint="@string/confirm_password"
                     android:inputType="textPassword" />
 
+                <TextView
+                    android:id="@+id/password_requirements"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cnf_password_edit_text"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@android:color/holo_red_light"
+                    android:text="@string/password_requirements"
+                    android:textSize="10sp"
+                    android:visibility="invisible"/>
+
                 <Button
                     android:id="@+id/sign_up_button"
                     style="@style/RoundedButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/cnf_password_edit_text"
+                    android:layout_below="@id/password_requirements"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="14dp"
                     android:layout_marginBottom="10dp"

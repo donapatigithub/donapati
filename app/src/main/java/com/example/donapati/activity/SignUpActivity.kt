@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -40,28 +41,38 @@ class SignUpActivity : AppCompatActivity() {
                 val password = passwordEditText.text.toString()
                 val confirmPassword = cnfPasswordEditText.text.toString()
 
-                if (password == confirmPassword) {
-                    val success = dbHelper.addUser(username, email, phone, password)
-                    if (success) {
-                        Toast.makeText(
-                            this@SignUpActivity,
-                            "Sign up successful",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Thread.sleep(1000)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(this@SignUpActivity, "Sign up failed", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                } else {
+                if (username.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        "Please fill in all required fields",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (!isValidPassword(password)) {
+                    binding.passwordRequirements.visibility = View.VISIBLE
+                } else if (password != confirmPassword) {
                     Toast.makeText(
                         this@SignUpActivity,
                         "Passwords do not match",
                         Toast.LENGTH_SHORT
                     ).show()
+                } else {
+                    val success = dbHelper.addUser(username, email, phone, password)
+                    if (success) {
+                        binding.passwordRequirements.visibility = View.GONE
+                        Toast.makeText(
+                            this@SignUpActivity,
+                            "Sign up successful",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Thread.sleep(500)
+                        startActivity(intent)
+                    } else {
+                        Toast.makeText(this@SignUpActivity, "Sign up failed", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
+
             loginLink.setOnClickListener {
                 startActivity(intent)
             }
@@ -89,6 +100,13 @@ class SignUpActivity : AppCompatActivity() {
                 getGoogleAccounts()
             }
         }
+    }
+
+    private fun isValidPassword(password: String): Boolean {
+        val passwordPattern =
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=!])(?=\\S+\$).{8,}\$"
+        val passwordMatcher = Regex(passwordPattern)
+        return passwordMatcher.matches(password)
     }
 
     private fun getGoogleAccounts() {
