@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,7 +11,7 @@
             android:id="@+id/logo"
             android:layout_width="75dp"
             android:layout_height="75dp"
-            android:layout_marginTop="438dp"
+            android:layout_marginTop="560dp"
             android:src="@drawable/cart_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

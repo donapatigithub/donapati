@@ -95,6 +95,7 @@
                     android:layout_marginBottom="10dp"
                     android:hint="@string/enter_your_password"
                     android:inputType="textPassword" />
+
                 <EditText
                     android:id="@+id/cnf_password_edit_text"
                     style="@style/EditTextStyle"
@@ -176,8 +177,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_below="@id/facebook_button"
+                    android:layout_marginTop="10dp"
                     android:gravity="center">
 
                     <TextView
