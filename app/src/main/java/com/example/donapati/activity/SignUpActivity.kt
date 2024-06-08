@@ -6,17 +6,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.donapati.databinding.ActivitySignUpBinding
-import android.util.Log
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private val READ_CONTACTS_PERMISSION_REQUEST = 1
+    private val GET_ACCOUNTS_PERMISSION_REQUEST = 1
     private val TAG = "SignUpActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +31,8 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
 
             signUpButton.setOnClickListener {
+                Toast.makeText(this@SignUpActivity, "Sign up successful", Toast.LENGTH_SHORT).show()
+                Thread.sleep(1000)
                 startActivity(intent)
             }
             loginLink.setOnClickListener {
@@ -40,14 +42,23 @@ class SignUpActivity : AppCompatActivity() {
                 startActivity(Intent(this@SignUpActivity, PreLoginActivity::class.java))
             }
             googleButton.setOnClickListener {
-                openApp("com.google")
+                openApp("com.google.android.apps.gmail")
             }
             facebookButton.setOnClickListener {
                 openApp("com.facebook.katana")
             }
 
-            if (ContextCompat.checkSelfPermission(this@SignUpActivity, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this@SignUpActivity, arrayOf(Manifest.permission.READ_CONTACTS), READ_CONTACTS_PERMISSION_REQUEST)
+            // Request GET_ACCOUNTS permission
+            if (ContextCompat.checkSelfPermission(
+                    this@SignUpActivity,
+                    Manifest.permission.GET_ACCOUNTS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this@SignUpActivity,
+                    arrayOf(Manifest.permission.GET_ACCOUNTS),
+                    GET_ACCOUNTS_PERMISSION_REQUEST
+                )
             } else {
                 getGoogleAccounts()
             }
@@ -82,14 +93,18 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == READ_CONTACTS_PERMISSION_REQUEST) {
+        if (requestCode == GET_ACCOUNTS_PERMISSION_REQUEST) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getGoogleAccounts()
             } else {
-                // Handle permission denial (e.g., show a message)
-                Toast.makeText(this, "Permission denied to access accounts", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permission denied to access accounts", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
     }
