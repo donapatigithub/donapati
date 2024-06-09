@@ -1,4 +1,4 @@
-package com.example.donapati.activity
+package com.example.donapati.activity.dashboardactivity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -10,5 +10,6 @@ import com.example.donapati.R
 class DashboardActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_dashboard)
     }
 }
