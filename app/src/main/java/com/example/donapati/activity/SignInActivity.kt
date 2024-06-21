@@ -31,16 +31,16 @@ class SignInActivity : AppCompatActivity() {
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
         }
         binding.loginButton.setOnClickListener {
-            val userName = binding.usernameEditText.text.toString()
-            val password = binding.passwordEditText.text.toString()
-            if (userName.isEmpty() || password.isEmpty()) {
+            val Username = binding.usernameEditText.text.toString()
+            val Password = binding.passwordEditText.text.toString()
+            if (Username.isEmpty() || Password.isEmpty()) {
                 binding.errorMessage.visibility = View.VISIBLE
                 return@setOnClickListener
             } else {
                 binding.errorMessage.visibility = View.GONE
                 CoroutineScope(Dispatchers.IO).launch {
                     val googleSheetApi = GoogleSheetCredentialsAPI(applicationContext)
-                    val isValid = validateUser(googleSheetApi, userName, password)
+                    val isValid = validateUser(googleSheetApi, Username, Password)
                     withContext(Dispatchers.Main) {
                         if (isValid) {
                             Toast.makeText(this@SignInActivity, "Login Successful", Toast.LENGTH_SHORT).show()
@@ -57,7 +57,7 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun validateUser(googleSheetApi: GoogleSheetCredentialsAPI, userName: String, password: String): Boolean {
+    private fun validateUser(googleSheetApi: GoogleSheetCredentialsAPI, Username: String, Password: String): Boolean {
         return try {
             val response = googleSheetApi.getSheetsService().spreadsheets().values()
                 .get("19zGEh_ZxbXnA0A1DCoJ2iF4s_IevHszVAbUqbHn2Mz0", "LoginCredentials")
@@ -65,7 +65,7 @@ class SignInActivity : AppCompatActivity() {
             val values = response.getValues()
             if (values != null) {
                 for (row in values) {
-                    if (row.size >= 4 && row[0] == userName && row[3] == password) {
+                    if (row.size >= 4 && row[0] == Username && row[3] == Password) {
                         return true
                     }
                 }

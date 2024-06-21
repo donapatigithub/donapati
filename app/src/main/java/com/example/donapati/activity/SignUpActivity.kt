@@ -38,22 +38,22 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(this@SignUpActivity, SignInActivity::class.java)
 
             signUpButton.setOnClickListener {
-                val username = usernameEditText.text.toString()
-                val email = emailEditText.text.toString()
-                val phone = phoneEditText.text.toString()
-                val password = passwordEditText.text.toString()
-                val confirmPassword = cnfPasswordEditText.text.toString()
+                val Username = usernameEditText.text.toString()
+                val Email = emailEditText.text.toString()
+                val Phone = phoneEditText.text.toString()
+                val Password = passwordEditText.text.toString()
+                val ConfirmPassword = cnfPasswordEditText.text.toString()
 
-                if (username.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+                if (Username.isEmpty() || Email.isEmpty() || Phone.isEmpty() || Password.isEmpty() || ConfirmPassword.isEmpty()) {
                     Toast.makeText(this@SignUpActivity, "Please fill in all required fields", Toast.LENGTH_SHORT).show()
-                } else if (!isValidPassword(password)) {
+                } else if (!isValidPassword(Password)) {
                     binding.passwordRequirements.visibility = View.VISIBLE
-                } else if (password != confirmPassword) {
+                } else if (Password != ConfirmPassword) {
                     Toast.makeText(this@SignUpActivity, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 } else {
                     CoroutineScope(Dispatchers.IO).launch {
                         val googleSheetApi = GoogleSheetCredentialsAPI(applicationContext)
-                        val success = addUserToGoogleSheet(googleSheetApi, username, email, phone, password)
+                        val success = addUserToGoogleSheet(googleSheetApi, Username, Email, Phone, Password)
                         withContext(Dispatchers.Main) {
                             if (success) {
                                 binding.passwordRequirements.visibility = View.GONE
@@ -88,9 +88,9 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun addUserToGoogleSheet(googleSheetApi: GoogleSheetCredentialsAPI, username: String, email: String, phone: String, password: String): Boolean {
+    private suspend fun addUserToGoogleSheet(googleSheetApi: GoogleSheetCredentialsAPI, Username: String, Email: String, Phone: String, Password: String): Boolean {
         return try {
-            val values = listOf(listOf(username, email, phone, password))
+            val values = listOf(listOf(Username, Email, Phone, Password))
             val body = ValueRange().setValues(values)
             googleSheetApi.getSheetsService().spreadsheets().values()
                 .append("19zGEh_ZxbXnA0A1DCoJ2iF4s_IevHszVAbUqbHn2Mz0", "LoginCredentials", body)
