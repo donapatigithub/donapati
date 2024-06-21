@@ -8,6 +8,12 @@ pluginManagement {
             }
         }
         mavenCentral()
+    }
+}
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
         gradlePluginPortal()
     }
 }

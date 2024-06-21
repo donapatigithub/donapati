@@ -13,12 +13,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.donapati.databinding.ActivitySignUpBinding
-import com.example.donapati.db.DatabaseHelper
+import com.example.donapati.db.GoogleSheetCredentialsAPI
+import com.google.api.services.sheets.v4.model.ValueRange
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private lateinit var dbHelper: DatabaseHelper
     private val GET_ACCOUNTS_PERMISSION_REQUEST = 1
     private val TAG = "SignUpActivity"
 
@@ -26,7 +30,6 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        dbHelper = DatabaseHelper(this)
         onClick()
     }
 
@@ -42,33 +45,24 @@ class SignUpActivity : AppCompatActivity() {
                 val confirmPassword = cnfPasswordEditText.text.toString()
 
                 if (username.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                    Toast.makeText(
-                        this@SignUpActivity,
-                        "Please fill in all required fields",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@SignUpActivity, "Please fill in all required fields", Toast.LENGTH_SHORT).show()
                 } else if (!isValidPassword(password)) {
                     binding.passwordRequirements.visibility = View.VISIBLE
                 } else if (password != confirmPassword) {
-                    Toast.makeText(
-                        this@SignUpActivity,
-                        "Passwords do not match",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this@SignUpActivity, "Passwords do not match", Toast.LENGTH_SHORT).show()
                 } else {
-                    val success = dbHelper.addUser(username, email, phone, password)
-                    if (success) {
-                        binding.passwordRequirements.visibility = View.GONE
-                        Toast.makeText(
-                            this@SignUpActivity,
-                            "Sign up successful",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        Thread.sleep(500)
-                        startActivity(intent)
-                    } else {
-                        Toast.makeText(this@SignUpActivity, "Sign up failed", Toast.LENGTH_SHORT)
-                            .show()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val googleSheetApi = GoogleSheetCredentialsAPI(applicationContext)
+                        val success = addUserToGoogleSheet(googleSheetApi, username, email, phone, password)
+                        withContext(Dispatchers.Main) {
+                            if (success) {
+                                binding.passwordRequirements.visibility = View.GONE
+                                Toast.makeText(this@SignUpActivity, "Sign up successful", Toast.LENGTH_SHORT).show()
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this@SignUpActivity, "Sign up failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     }
                 }
             }
@@ -86,25 +80,31 @@ class SignUpActivity : AppCompatActivity() {
                 openApp("com.facebook.katana")
             }
 
-            if (ContextCompat.checkSelfPermission(
-                    this@SignUpActivity,
-                    Manifest.permission.GET_ACCOUNTS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    this@SignUpActivity,
-                    arrayOf(Manifest.permission.GET_ACCOUNTS),
-                    GET_ACCOUNTS_PERMISSION_REQUEST
-                )
+            if (ContextCompat.checkSelfPermission(this@SignUpActivity, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this@SignUpActivity, arrayOf(Manifest.permission.GET_ACCOUNTS), GET_ACCOUNTS_PERMISSION_REQUEST)
             } else {
                 getGoogleAccounts()
             }
         }
     }
 
+    private suspend fun addUserToGoogleSheet(googleSheetApi: GoogleSheetCredentialsAPI, username: String, email: String, phone: String, password: String): Boolean {
+        return try {
+            val values = listOf(listOf(username, email, phone, password))
+            val body = ValueRange().setValues(values)
+            googleSheetApi.getSheetsService().spreadsheets().values()
+                .append("19zGEh_ZxbXnA0A1DCoJ2iF4s_IevHszVAbUqbHn2Mz0", "LoginCredentials", body)
+                .setValueInputOption("RAW")
+                .execute()
+            true
+        } catch (e: Exception) {
+            Log.e(TAG, "Error adding user to Google Sheet", e)
+            false
+        }
+    }
+
     private fun isValidPassword(password: String): Boolean {
-        val passwordPattern =
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=!])(?=\\S+\$).{8,}\$"
+        val passwordPattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+=!])(?=\\S+\$).{8,}\$"
         val passwordMatcher = Regex(passwordPattern)
         return passwordMatcher.matches(password)
     }
@@ -125,30 +125,20 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             try {
-                startActivity(
-                    Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse("market://details?id=$packageName")
-                    )
-                )
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
             } catch (e: Exception) {
                 Toast.makeText(this, "App not installed", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == GET_ACCOUNTS_PERMISSION_REQUEST) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getGoogleAccounts()
             } else {
-                Toast.makeText(this, "Permission denied to access accounts", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Permission denied to access accounts", Toast.LENGTH_SHORT).show()
             }
         }
     }

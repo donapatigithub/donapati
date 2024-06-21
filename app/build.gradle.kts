@@ -46,12 +46,19 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/DEPENDENCIES"
+            excludes += "META-INF/DEPENDENCIES.txt"
+            excludes += "META-INF/LICENSE"
+            excludes += "META-INF/LICENSE.txt"
+            excludes += "META-INF/NOTICE"
+            excludes += "META-INF/NOTICE.txt"
+            excludes += "META-INF/native-image/resource-config.json"
+            excludes += "META-INF/native-image/reflect-config.json"
         }
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -77,13 +84,21 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
-    implementation (libs.okhttp)
-    implementation (libs.logging.interceptor)
-    implementation (libs.okhttp.urlconnection)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.okhttp.urlconnection)
     implementation(libs.androidx.activity)
-    implementation (libs.hdodenhof.circleimageview)
+    implementation(libs.hdodenhof.circleimageview)
     implementation(libs.firebase.auth.ktx)
-    //test's
+    implementation(libs.google.api.client.v220)
+    implementation(libs.google.oauth.client)
+    implementation (libs.google.oauth.client.jetty.v1321)
+    implementation(libs.google.api.services.sheets.vv4rev6121250)
+    implementation (libs.google.auth.library.oauth2.http.v110)
+    implementation(libs.generativeai)
+    implementation(libs.androidx.media3.common)
+
+    // test's
     testImplementation(libs.junit)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
